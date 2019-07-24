@@ -1,4 +1,4 @@
 # L-c-SWBD
 
-Dữ liệu lây từ SWBD corpus:
+Dữ liệu lấy từ SWBD corpus:
 http://nlpprogress.com/english/dialogue.html
