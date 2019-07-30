@@ -84,22 +84,76 @@ print(len(sentence_li))
 
 for i in range(447210, -2, -2):
         del sentence_li[i]
+
+#Xu li content
+
+
+for n in range(300):
+        sentence = sentence_li[n].strip()
+        while sentence.find('{') != -1 and sentence.find('}') != -1:
+                i = sentence.index('{')
+                j = sentence.index('}')
+                sentence = sentence[:i] + sentence[(j+2):]
+
+        sentence_li[n] = sentence
         
+for n in range(300):
+        sentence = sentence_li[n]
+        while sentence.find('<') != -1 and sentence.find('>') != -1:
+                i = sentence.index('<')
+                j = sentence.index('>')
+                sentence = sentence[:i] + sentence[(j+2):]
+
+        sentence_li[n] = sentence.strip()
 
 
         
-print(label_li[10:40])
-print(len(label_li))
-print(person_li[0:10])
-print(len(person_li))
-print(sentence_li[0:10])
-print(len(sentence_li))
+for n in range(300):
+        if sentence_li[n].endswith('+'):
+                person_li[n] = person_li[n+1]
+                label_li[n] = ''
+                sentence_li[n+2] = sentence_li[n] + ' ' + sentence_li[n+2]
+                sentence_li[n] = ''
+        else:
+                continue
+for n in range(300):
+        if sentence_li[n].endswith('--'):
+                person_li[n] = person_li[n+1]
+                label_li[n] = ''
+                sentence_li[n+2] = sentence_li[n].rstrip('--').strip() + ' ' + sentence_li[n+2].lstrip('--').strip()
+                sentence_li[n] = ''
+        else:
+                continue
+
+for n in range(300):
+        sentence = sentence_li[n]
+        while sentence.find(']') != -1 and sentence.find('[') != -1 and sentence.find('+') != -1:
+                i = sentence.index('[')
+                j = sentence.index('+')
+                t = sentence.index(']')
+                sentence = sentence[:(i+1)] + sentence[(j+2):]
+        sentence = sentence.replace('[', '').replace(']', '')
+        sentence = sentence.strip('-').replace('  ', ' ')
+        
+
+for n in range(50):
+        sentence_li[n] = sentence_li[n].strip()
+        while person_li[n+1] == person_li[n]:
+                sentence_li[n+1] = sentence_li[n].strip() + ' ' + sentence_li[n+1].strip()
+                label_li[n] = ''
+                sentence_li[n] = ''
+                person_li[n] = ''
+                
+
+
+print(sentence_li[0:13])
+
 
 #Write
-file_w = open("./con_swbd.py", 'wb')
+file_w = open("./con_swbd1.py", 'wb')
 d = '| {:^6} | {:^30} | {:<10} |\n'.format('Person', 'Tag', 'Sentence')
 file_w.write(d.encode())
-for i in range(len(label_li)):
+for i in range(300):
         c = '| {:^6} | {:^30} | {:<10} |\n'.format(person_li[i], label_li[i], sentence_li[i])
         file_w.write(c.encode())
 
