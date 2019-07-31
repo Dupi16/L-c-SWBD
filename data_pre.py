@@ -79,7 +79,7 @@ for item in files:
                 
         #content
         for sentence in now:
-                sentence = sentence.strip().rstrip('/')
+                sentence = sentence.strip().rstrip('*').strip('/')
                 
                 if (sentence.find('A.') != -1 or sentence.find('B.') != -1) and sentence.find("utt") != -1:
                         m = sentence.split(':', 1)
@@ -156,7 +156,7 @@ for item in files:
                         label_li[n] = ''
                         sentence_li[n] = ''
                         person_li[n] = ''
-                sentence_li[n] = sentence_li[n].replace('#', ' ').replace('  ', ' ').strip()
+                sentence_li[n] = sentence_li[n].replace('#', ' ').replace('--', ' ').replace(')', ' ').replace('(', ' ').replace('-', ' ').replace('  ', ' ').strip()
 
 
         for i in range(len(sentence_li)-1, -1, -1):
